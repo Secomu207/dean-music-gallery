@@ -119,7 +119,7 @@
       const input = document.getElementById('adminPw').value;
       const logBox = document.getElementById('logBox');
       if (input === 'kingdeantrbl') {
-        fetch('/admin?pw=kingdeantrbl')
+        fetch('/api/admin?pw=kingdeantrbl')
           .then(res => res.text())
           .then(data => {
             logBox.style.display = 'block';
@@ -131,7 +131,7 @@
     }
 
     // 방문 로그 저장 (IP 등)
-    fetch('/log', {
+    fetch('/api/log', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
