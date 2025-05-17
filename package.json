@@ -1,0 +1,12 @@
+{
+  "name": "dean-music-gallery",
+  "version": "1.0.0",
+  "description": "DEAN Music Gallery with IP logging and admin access",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

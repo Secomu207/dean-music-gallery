@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>DEAN Music Gallery</title>
+  <style>
+    body {
+      background: #111;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    .sidebar {
+      width: 200px;
+      background: #1c1c1c;
+      padding: 1rem;
+      height: 100vh;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+    }
+    .sidebar h2 {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .sidebar input, .sidebar button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: none;
+      border-radius: 6px;
+    }
+    .sidebar button {
+      background: #444;
+      color: white;
+      cursor: pointer;
+    }
+    .main {
+      flex: 1;
+      overflow-x: hidden;
+    }
+    .notice {
+      background: #222;
+      padding: 1rem;
+      color: #aaa;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .gallery {
+      position: relative;
+      height: 100vh;
+    }
+    .gallery a {
+      position: absolute;
+      display: block;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .gallery a:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    }
+    .gallery img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+    .gallery a:nth-child(1) { top: 10%; left: 10%; }
+    .gallery a:nth-child(2) { top: 30%; left: 40%; }
+    .gallery a:nth-child(3) { top: 50%; left: 20%; }
+    .gallery a:nth-child(4) { top: 20%; left: 70%; }
+    .gallery a:nth-child(5) { top: 60%; left: 60%; }
+    .gallery a:nth-child(6) { top: 40%; left: 80%; }
+    .gallery a:nth-child(7) { top: 75%; left: 30%; }
+    .gallery a:nth-child(8) { top: 15%; left: 50%; }
+    .gallery a:nth-child(9) { top: 70%; left: 10%; }
+    #logBox {
+      white-space: pre-wrap;
+      background: #000;
+      color: #0f0;
+      font-size: 0.8rem;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      display: none;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>관리자 로그인</h2>
+    <input type="password" id="adminPw" placeholder="비밀번호 입력">
+    <button onclick="checkAdmin()">로그인</button>
+    <div id="logBox"></div>
+  </div>
+  <div class="main">
+    <div class="notice">
+      📌 이 사이트는 접속자의 IP와 유입경로를 30일간 저장하며, 관리자만 열람할 수 있습니다.
+    </div>
+    <div class="gallery">
+      <a href="https://youtu.be/wzvRxguTPa4" target="_blank"><img src="image1.png" alt="Track 1"></a>
+      <a href="https://youtu.be/XdfXJyUuy0c" target="_blank"><img src="image2.png" alt="Track 2"></a>
+      <a href="https://youtu.be/gMrYfJGm7kM" target="_blank"><img src="image3.png" alt="Track 3"></a>
+      <a href="https://youtu.be/_zb1OzlCYto" target="_blank"><img src="image4.png" alt="Track 4"></a>
+      <a href="https://youtu.be/JEIcjRj7S9g" target="_blank"><img src="image5.png" alt="Track 5"></a>
+      <a href="https://youtu.be/wKyMIrBClYw" target="_blank"><img src="image6.png" alt="Track 6"></a>
+      <a href="https://youtu.be/Z3W0jKcv1SU" target="_blank"><img src="image7.png" alt="Track 7"></a>
+      <a href="https://youtu.be/SctIHP5dPyM" target="_blank"><img src="image8.png" alt="Track 8"></a>
+      <a href="https://youtu.be/YHJFFK2XT2M" target="_blank"><img src="image9.png" alt="Track 9"></a>
+    </div>
+  </div>
+  <script>
+    function checkAdmin() {
+      const input = document.getElementById('adminPw').value;
+      if (input === 'kingdeantrbl') {
+        fetch('https://dean-gallery.onrender.com/admin?pw=kingdeantrbl')
+          .then(res => res.text())
+          .then(data => {
+            const logBox = document.getElementById('logBox');
+            logBox.style.display = 'block';
+            logBox.innerText = data;
+          });
+      } else {
+        alert('비밀번호가 틀렸습니다.');
+      }
+    }
+
+    // 접속 시 IP 기록 요청
+    fetch('https://dean-gallery.onrender.com/log', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        referrer: document.referrer,
+        userAgent: navigator.userAgent
+      })
+    });
+  </script>
+</body>
+</html>
