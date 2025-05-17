@@ -4,9 +4,10 @@ import path from 'path';
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  // Vercel이 주는 진짜 IP 추출
-  const forwarded = req.headers['x-forwarded-for'];
-  const ip = forwarded ? forwarded.split(',')[0].trim() : req.socket?.remoteAddress || 'unknown';
+  const ip =
+    (req.headers['x-forwarded-for'] || '').split(',')[0].trim() ||
+    req.socket?.remoteAddress ||
+    'unknown';
 
   const log = {
     ip,
