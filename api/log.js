@@ -4,7 +4,7 @@ import path from 'path';
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  // 실제 IP 추출 (첫 번째 값 사용)
+  // Vercel이 주는 진짜 IP 추출
   const forwarded = req.headers['x-forwarded-for'];
   const ip = forwarded ? forwarded.split(',')[0].trim() : req.socket?.remoteAddress || 'unknown';
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     ip,
     time: new Date().toISOString(),
     referrer: req.body.referrer || '없음',
-    userAgent: req.body.userAgent || '없음'
+    userAgent: req.body.userAgent || '없음',
   };
 
   const filePath = path.join(process.cwd(), 'access-log.json');
